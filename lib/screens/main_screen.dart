@@ -71,9 +71,10 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
           children: [
             const SizedBox(height: 24),
             Expanded(
@@ -129,6 +130,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             const SizedBox(height: 8),
           ],
+        ),
         ),
       ),
     );

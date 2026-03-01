@@ -63,7 +63,8 @@ class _RevealScreenState extends State<RevealScreen> {
 
   return Scaffold(
   appBar: AppBar(title: const Text('계시')),
-  body: Stack(
+  body: SafeArea(
+    child: Stack(
     children: [
       // 배경 그라데이션(몽환)
       Container(
@@ -96,17 +97,18 @@ class _RevealScreenState extends State<RevealScreen> {
 
               const SizedBox(height: 18),
 
-              // 이미지: reveal 이후 나타나게
+              // 이미지: reveal 이후 나타나게 (1:1 정사각형, 크게)
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 450),
                 child: !_revealed
-                    ? const SizedBox(height: 180)
+                    ? const SizedBox(width: 280, height: 280)
                     : SizedBox(
                         key: const ValueKey('img'),
-                        height: 180,
+                        width: 280,
+                        height: 280,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16),
-                          child: Image.asset(a.imageAsset, fit: BoxFit.cover, width: double.infinity),
+                          child: Image.asset(a.imageAsset, fit: BoxFit.cover),
                         ),
                       ).animate().fadeIn(duration: 400.ms).blur(begin: const Offset(6, 6), end: const Offset(0, 0)),
               ),
@@ -135,7 +137,7 @@ class _RevealScreenState extends State<RevealScreen> {
                 opacity: _revealed ? 1 : 0,
                 duration: const Duration(milliseconds: 450),
                 child: Text(
-                  '이 문장을 마음속에 새기세요.\n마력은 1시간 뒤 회복됩니다.',
+                  '이 문장을 마음속에 새기세요.\n마력은 5분 뒤 회복됩니다.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white70),
                 ),
@@ -159,6 +161,7 @@ class _RevealScreenState extends State<RevealScreen> {
         ),
       ),
     ],
+    ),
   ),
   );
   }

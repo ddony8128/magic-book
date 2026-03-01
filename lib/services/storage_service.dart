@@ -27,13 +27,13 @@ class StorageService {
     await prefs.setInt(_kLastUsedAtMs, dt.millisecondsSinceEpoch);
   }
 
-  bool isOnCooldown({required DateTime? lastUsedAt, Duration cooldown = const Duration(hours: 1)}) {
+  bool isOnCooldown({required DateTime? lastUsedAt, Duration cooldown = const Duration(minutes: 5)}) {
     if (lastUsedAt == null) return false;
     final now = DateTime.now();
     return now.isBefore(lastUsedAt.add(cooldown));
   }
 
-  Duration remainingCooldown({required DateTime lastUsedAt, Duration cooldown = const Duration(hours: 1)}) {
+  Duration remainingCooldown({required DateTime lastUsedAt, Duration cooldown = const Duration(minutes: 5)}) {
     final endsAt = lastUsedAt.add(cooldown);
     final now = DateTime.now();
     final diff = endsAt.difference(now);

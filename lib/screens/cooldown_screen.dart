@@ -51,8 +51,9 @@ class _CooldownScreenState extends State<CooldownScreen> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('마력 충전')),
-      body: Center(
-        child: Column(
+      body: SafeArea(
+        child: Center(
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.bolt, size: 72),
@@ -72,6 +73,7 @@ class _CooldownScreenState extends State<CooldownScreen> {
               child: Text(done ? '돌아가기' : '확인'),
             ),
           ],
+        ),
         ),
       ),
     );

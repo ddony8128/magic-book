@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/answers.dart';
+import '../models/magic_answer.dart';
 import '../services/storage_service.dart';
 
 class LibraryScreen extends StatefulWidget {
@@ -29,6 +30,35 @@ class _LibraryScreenState extends State<LibraryScreen> {
     });
   }
 
+  void _showRecordDialog(BuildContext context, MagicAnswer a) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('기록'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.asset(a.imageAsset, fit: BoxFit.cover),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(a.text),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('닫기')),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_loading) {
@@ -49,9 +79,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: GridView.builder(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: GridView.builder(
           itemCount: kMagicAnswers.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
@@ -66,19 +97,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
               title: discovered ? a.text : '아직 봉인된 페이지',
               discovered: discovered,
               onTap: discovered
-                  ? () => showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: const Text('기록'),
-                          content: Text(a.text),
-                          actions: [
-                            TextButton(onPressed: () => Navigator.pop(context), child: const Text('닫기')),
-                          ],
-                        ),
-                      )
+                  ? () => _showRecordDialog(context, a)
                   : null,
             );
           },
+        ),
         ),
       ),
     );
@@ -98,7 +121,7 @@ class _BookTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = discovered ? Colors.white10 : Colors.white.withOpacity(0.05);
+    final bg = discovered ? Colors.white10 : Colors.white.withValues(alpha: 0.05);
     final border = discovered ? Colors.white24 : Colors.white12;
 
     return InkWell(

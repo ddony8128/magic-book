@@ -40,8 +40,9 @@ class _FocusScreenState extends State<FocusScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('집중')),
-      body: Center(
-        child: Column(
+      body: SafeArea(
+        child: Center(
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text('고민을 마음속으로 되뇌이세요.'),
@@ -53,6 +54,7 @@ class _FocusScreenState extends State<FocusScreen> {
             const SizedBox(height: 16),
             const Text('…'),
           ],
+        ),
         ),
       ),
     );
