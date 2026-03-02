@@ -50,7 +50,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.4
-  flutter_native_splash: ^2.4.7
+  # flutter_native_splash 제거: Android 빌드 시 옛날 플러그인 등록(net.jonhanson...)으로 컴파일 에러 발생.
+  # 스플래시 변경 시 일시적으로 추가 → dart run flutter_native_splash:create → 다시 제거 후 빌드.
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

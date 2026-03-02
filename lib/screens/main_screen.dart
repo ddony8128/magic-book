@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void _startFlow() {
+  Future<void> _startFlow() async {
     if (_storage.isOnCooldown(lastUsedAt: _lastUsedAt)) {
       Navigator.push(
         context,
@@ -41,6 +41,9 @@ class _MainScreenState extends State<MainScreen> {
       return;
     }
 
+    // 책장을 펼치는 순간 사용일시 저장 → 책장/뒤로가기 후 재시도해도 쿨타임 적용
+    await _storage.saveLastUsedAt(DateTime.now());
+    if (!mounted) return;
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const FocusScreen()),
